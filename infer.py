@@ -10,7 +10,7 @@ from torchvision import transforms
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('dataPath', type=str, default=r'.\test_images')
+parser.add_argument('--dataPath', type=str, default=r'.\test_images\BDD10K_test')
 parser.add_argument('--trained_model_path', type=str, default=r'.\checkpoints\netG.pth')
 parser.add_argument('--resultsPath', type=str, default=r'.\test_results')
 parser.add_argument('--device_ids', default=[0])
