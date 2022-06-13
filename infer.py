@@ -3,7 +3,6 @@ from singleBatch_model import AttenNet
 from torchvision.utils import save_image
 import argparse
 import torch.nn as nn
-from datasets import *
 from tqdm import tqdm
 
 
