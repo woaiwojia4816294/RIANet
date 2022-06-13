@@ -4,10 +4,13 @@ from torchvision.utils import save_image
 import argparse
 import torch.nn as nn
 from tqdm import tqdm
+import os
+from PIL import Image
+from torchvision import transforms
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('dataPath', type=str, default=r'D:\PycharmProjects\low-light enhancement\oa_code\test_images')
+parser.add_argument('dataPath', type=str, default=r'.\test_images')
 parser.add_argument('--trained_model_path', type=str, default=r'.\checkpoints\netG.pth')
 parser.add_argument('--resultsPath', type=str, default=r'.\test_results')
 parser.add_argument('--device_ids', default=[0])
@@ -28,7 +31,9 @@ if __name__ == '__main__':
     for i in tqdm(range(len(os.listdir(opt.dataPath)))):
         imgPath = os.path.join(opt.dataPath, imgs[i])
         img = Image.open(imgPath)
-        img_transforms = transforms.ToTensor()
+        img_transforms = transforms.Compose([
+            transforms.Resize((240, 480)),
+            transforms.ToTensor()])
         
         proc_img = img_transforms(img).unsqueeze(0).cuda()
         enhanced_img = netG(proc_img)
