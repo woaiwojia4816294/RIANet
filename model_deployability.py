@@ -1,6 +1,6 @@
 import torch
 import time
-from utils.model import AttenNet
+from singleBatch_model import AttenNet
 from ptflops import get_model_complexity_info
 
 
