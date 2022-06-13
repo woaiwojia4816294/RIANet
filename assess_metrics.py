@@ -16,8 +16,8 @@ from assess_metrics.deltae import rgb2lab_matrix
 from sewar.full_ref import uqi
 
 
-dataPath = r'D:\PycharmProjects\paper_instrument\ImageQualityAssessment\down_results\cityscapeshdrnet'
-groundTruthPath = r'D:\PycharmProjects\paper_instrument\ImageQualityAssessment\down_results\cityscapes_groundTruth'
+dataPath = r''
+groundTruthPath = r''
 assert len(os.listdir(dataPath)) == len(os.listdir(groundTruthPath))
 
 msssim = MS_SSIM(data_range=1.0)
