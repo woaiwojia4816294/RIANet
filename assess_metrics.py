@@ -7,12 +7,8 @@ from tqdm import tqdm
 import lpips
 
 from pytorch_msssim import MS_SSIM
-
 from assess_metrics.psnr import psnr
 from assess_metrics.fsim import FSIMc
-from assess_metrics import deltae
-from assess_metrics.deltae import rgb2lab_matrix
-
 from sewar.full_ref import uqi
 
 
@@ -32,7 +28,6 @@ MSSSIM = 0.0
 FSIM = 0.0
 LPIPS = 0.0
 UQI = 0.0
-deltaE = 0.0
 if __name__ == "__main__":
     for x_name, y_name in tqdm(zip(os.listdir(dataPath), os.listdir(groundTruthPath))):
         x_tensor = transf(Image.open(os.path.join(dataPath, x_name))).unsqueeze(0).cuda()
@@ -46,17 +41,10 @@ if __name__ == "__main__":
         LPIPS += loss_fn_alex(x_tensor, y_tensor)
         UQI += uqi(x, y)
 
-        x_lab = rgb2lab_matrix(x.reshape(-1, 3))  # 921600,3
-        y_lab = rgb2lab_matrix(y.reshape(-1, 3))
-        x_lab1 = {'L': x_lab[:, 0], 'a': x_lab[:, 1], 'b': x_lab[:, 2]}
-        y_lab1 = {'L': y_lab[:, 0], 'a': y_lab[:, 1], 'b': y_lab[:, 2]}
-        deltaE += deltae.delta_e_1976(x_lab1, y_lab1)
-
     avgMSSSIM = MSSSIM / len(os.listdir(dataPath))
     avgPSNR = PSNR / len(os.listdir(dataPath))
     avgLPIPS = LPIPS / len(os.listdir(dataPath))
     avgFSIM = FSIM / len(os.listdir(dataPath))
-    avgdeltaE = deltaE / len(os.listdir(dataPath))
     avgUQI = UQI / len(os.listdir(dataPath))
     print("the current comparison is % s" % os.path.basename(dataPath))
     print("avgMSSSIM is % s" % avgMSSSIM)
@@ -64,4 +52,3 @@ if __name__ == "__main__":
     print("avgLPIPS is % s" % avgLPIPS)
     print("avgUQI is % s" % avgUQI)
     print("avgFSIM is % s" % avgFSIM)
-    print("avgdeltaE is % s" % avgdeltaE)
