@@ -3,7 +3,7 @@ import math
 
 
 def psnr(img, groundTruth):
-    mse = np.mean((img.astype(np.float64) - groundTruth.astype(np.float64)) ** 2)  # dui
+    mse = np.mean((img.astype(np.float64) - groundTruth.astype(np.float64)) ** 2)
     if mse == 0:
         return np.inf
     PIXEL_MAX = 255.0
