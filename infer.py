@@ -31,9 +31,8 @@ if __name__ == '__main__':
     for i in tqdm(range(len(os.listdir(opt.dataPath)))):
         imgPath = os.path.join(opt.dataPath, imgs[i])
         img = Image.open(imgPath)
-        img_transforms = transforms.Compose([
-            transforms.Resize((240, 480)),
-            transforms.ToTensor()])
+        
+        img_transforms = transforms.ToTensor()
         
         proc_img = img_transforms(img).unsqueeze(0).cuda()
         enhanced_img = netG(proc_img)
